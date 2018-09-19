@@ -1,0 +1,14 @@
+*filter
+:INPUT ACCEPT [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+:FWINPUT - [0:0]
+-A INPUT -j FWINPUT
+-A FORWARD -j FWINPUT
+-A FWINPUT -i lo -j ACCEPT
+-A FWINPUT -p icmp --icmp-type any -j ACCEPT
+-A FWINPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+-A FWINPUT -p tcp -m tcp --dport 22 -s 126.99.238.242 -j ACCEPT
+-A FWINPUT -p tcp -m tcp --dport 60088 -s 126.99.238.242 -j ACCEPT
+-A FWINPUT -j REJECT --reject-with icmp-host-prohibited
+COMMIT
