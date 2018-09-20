@@ -1,5 +1,4 @@
 require "proproxy/version"
-require "proproxy/cli"
 require 'pry'
 require 'sshkit'
 
@@ -49,6 +48,7 @@ module Proproxy
         execute 'mkdir /etc/sysconfig/'
         execute 'touch /etc/sysconfig/iptables'
       end
+      copy_template
     end
 
     def restart_squid
@@ -86,6 +86,14 @@ module Proproxy
     def clear_squid_cache
       on @remote_host do
         execute 'squid -z'
+      end
+    end
+
+    def copy_template
+      root = Dir.pwd
+      on @remote_host do
+        upload! "#{root}/templates/iptables", '/etc/sysconfig/iptables'
+        upload! "#{root}/templates/squid.conf", '/etc/squid/squid.conf'
       end
     end
   end
