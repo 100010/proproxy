@@ -48,17 +48,34 @@ class Server
   end
 
   def restart_squid
+    stop_squid
+    start_squid
   end
 
-  def update_ip_table
+  def update_ip_table(new_ip, port)
+  end
+
+  def configure_ip_table
+    on @remote_host do
+      execute 'iptables-restore < /etc/sysconfig/iptables'
+    end
   end
 
   def stop_squid
+    on @remote_host do
+      execute 'service squid stop'
+    end
   end
 
   def start_squid
+    on @remote_host do
+      execute 'service squid start'
+    end
   end
 
   def clear_squid_cache
+    on @remote_host do
+      execute 'squid -z'
+    end
   end
 end
