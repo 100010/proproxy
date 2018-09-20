@@ -58,8 +58,12 @@ module Proproxy
 
     def update_ip_table(ip_v4, port)
       new_tonnel = "-A FWINPUT -p tcp -m tcp --dport #{port} -s #{ip_v4} -j ACCEPT"
+      new_port = "http_port #{port}"
+      new_src = "acl myacl src #{ip_v4}/255.255.255.255"
       on @remote_host do
         execute "echo #{new_tonnel} >> /etc/sysconfig/iptables"
+        execute "echo #{new_port} >> /etc/squid/squid.conf"
+        execute "echo #{new_src} >> /etc/squid/squid.conf"
       end
       configure_ip_table
       restart_squid
