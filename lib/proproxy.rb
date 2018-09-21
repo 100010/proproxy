@@ -60,19 +60,24 @@ module Proproxy
       new_tonnel = "-A FWINPUT -p tcp -m tcp --dport #{port} -s #{ip_v4} -j ACCEPT"
       new_port = "http_port #{port}"
       new_src = "acl myacl src #{ip_v4}/255.255.255.255"
+
+      remove_last_commit_line
       on @remote_host do
         execute "echo #{new_tonnel} >> /etc/sysconfig/iptables"
         execute "echo #{new_port} >> /etc/squid/squid.conf"
         execute "echo #{new_src} >> /etc/squid/squid.conf"
       end
+      add_last_commit_line_command
 
       if with_ssh_port
         ssh_tonnel = "-A FWINPUT -p tcp -m tcp --dport 22 -s #{ip_v4} -j ACCEPT"
         ssh_port = "http_port 22"
+        remove_last_commit_line
         on @remote_host do
           execute "echo #{ssh_tonnel} >> /etc/sysconfig/iptables"
           execute "echo #{ssh_port} >> /etc/squid/squid.conf"
         end
+        add_last_commit_line_command
       end
       configure_ip_table
       restart_squid
@@ -101,6 +106,20 @@ module Proproxy
         execute 'squid -z'
       end
     end
+
+    def remove_last_commit_line
+      on @remote_host do
+        execute 'head -n -1 /etc/sysconfig/iptables > /etc/sysconfig/tmp_iptables ; mv /etc/sysconfig/tmp_iptables /etc/sysconfig/iptables'
+      end
+    end
+
+    def add_last_commit_line_command
+      on @remote_host do
+        execute 'echo COMMIT >> /etc/sysconfig/iptables'
+      end
+    end
+
+    private
 
     def copy_template
       root = Dir.pwd
