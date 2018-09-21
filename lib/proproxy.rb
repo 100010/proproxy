@@ -19,24 +19,24 @@ module Proproxy
       #   raise InvalidServerNameError.new 'invalid os name'
       # end
 
-      if options[:ssh_path].nil?
-        @ssh_path = '~/.ssh/id_rsa'
+      ssh_path = if options[:ssh_path].nil?
+        '~/.ssh/id_rsa'
       else
-        @ssh_path = options[:ssh_path]
+        options[:ssh_path]
       end
 
-      if options[:username].nil?
-        @username = 'root'
+      username = if options[:username].nil?
+        'root'
       else
-        @username = options[:username]
+        options[:username]
       end
 
       SSHKit.config.output_verbosity = Logger::DEBUG
 
       @remote_host = SSHKit::Host.new(ip)
-      @remote_host.user = @username
+      @remote_host.user = username
       @remote_host.ssh_options = {
-        keys: [@ssh_path],
+        keys: [ ssh_path ],
         auth_methods: %w(publickey)
       }
     end
