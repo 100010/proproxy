@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    proproxy (0.1.8)
+    proproxy (0.1.9)
       sshkit
 
 GEM
