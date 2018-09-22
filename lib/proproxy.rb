@@ -6,10 +6,11 @@ class InvalidServerNameError < StandardError ; end
 
 module Proproxy
   class Server
-    AVAILABLE_OS_NAME = [
-      :ubuntu,
-      :centos
-    ]
+    # TODO: 
+    # AVAILABLE_OS_NAME = [
+    #   :ubuntu,
+    #   :centos
+    # ]
 
     include SSHKit::DSL
 
@@ -109,6 +110,8 @@ module Proproxy
       end
     end
 
+    private
+
     def remove_last_2_line
       on @remote_host do
         execute 'head -n -2 /etc/sysconfig/iptables > /etc/sysconfig/tmp_iptables ; mv /etc/sysconfig/tmp_iptables /etc/sysconfig/iptables'
@@ -126,8 +129,6 @@ module Proproxy
         execute 'echo -A FWINPUT -j REJECT --reject-with icmp-host-prohibited >> /etc/sysconfig/iptables'
       end
     end
-
-    private
 
     def copy_template
       root = Dir.pwd
