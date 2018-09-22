@@ -130,6 +130,13 @@ module Proproxy
       end
     end
 
+    def allow_specified_src
+      on @remote_host do
+        execute 'http_access allow myacl >> /etc/sysconfig/iptables'
+        execute 'http_access deny all >> /etc/sysconfig/iptables'
+      end
+    end
+
     def copy_template
       file_path = File.dirname(__FILE__).gsub('/lib', '')
       on @remote_host do
