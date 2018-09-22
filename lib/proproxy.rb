@@ -6,7 +6,7 @@ class InvalidServerNameError < StandardError ; end
 
 module Proproxy
   class Server
-    # TODO: 
+    # TODO:
     # AVAILABLE_OS_NAME = [
     #   :ubuntu,
     #   :centos
@@ -131,10 +131,9 @@ module Proproxy
     end
 
     def copy_template
-      root = Dir.pwd
       on @remote_host do
-        upload! "#{root}/templates/iptables", '/etc/sysconfig/iptables'
-        upload! "#{root}/templates/squid.conf", '/etc/squid/squid.conf'
+        upload! "templates/iptables", '/etc/sysconfig/iptables'
+        upload! "templates/squid.conf", '/etc/squid/squid.conf'
       end
     end
   end
