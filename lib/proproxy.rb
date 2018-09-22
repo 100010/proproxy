@@ -133,8 +133,8 @@ module Proproxy
 
     def allow_specified_src
       on @remote_host do
-        execute 'http_access allow myacl >> /etc/sysconfig/iptables'
-        execute 'http_access deny all >> /etc/sysconfig/iptables'
+        execute 'echo http_access allow myacl >> /etc/sysconfig/iptables'
+        execute 'echo http_access deny all >> /etc/sysconfig/iptables'
       end
     end
 
