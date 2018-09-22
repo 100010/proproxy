@@ -133,8 +133,8 @@ module Proproxy
 
     def allow_specified_src
       on @remote_host do
-        execute 'echo http_access allow myacl >> /etc/sysconfig/iptables'
-        execute 'echo http_access deny all >> /etc/sysconfig/iptables'
+        execute 'echo http_access allow myacl >> /etc/squid/squid.conf'
+        execute 'echo http_access deny all >> /etc/squid/squid.conf'
       end
     end
 
