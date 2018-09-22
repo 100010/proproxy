@@ -131,10 +131,10 @@ module Proproxy
     end
 
     def copy_template
-      current_dir = File.expand_path('.')
+      file_path = File.dirname(__FILE__).gsub('/lib', '')
       on @remote_host do
-        upload! "#{current_dir}/templates/iptables", '/etc/sysconfig/iptables'
-        upload! "#{current_dir}/templates/squid.conf", '/etc/squid/squid.conf'
+        upload! "#{file_path}/templates/iptables", '/etc/sysconfig/iptables'
+        upload! "#{file_path}/templates/squid.conf", '/etc/squid/squid.conf'
       end
     end
   end
