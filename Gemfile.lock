@@ -4,7 +4,6 @@ PATH
     proproxy (0.1.0)
       pry
       sshkit
-      thor
 
 GEM
   remote: https://rubygems.org/
@@ -35,7 +34,6 @@ GEM
     sshkit (1.17.0)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
-    thor (0.20.0)
 
 PLATFORMS
   ruby
