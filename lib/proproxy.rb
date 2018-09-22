@@ -132,8 +132,8 @@ module Proproxy
 
     def copy_template
       on @remote_host do
-        upload! "templates/iptables", '/etc/sysconfig/iptables'
-        upload! "templates/squid.conf", '/etc/squid/squid.conf'
+        upload! File.expand_path('templates', 'iptables'), '/etc/sysconfig/iptables'
+        upload! File.expand_path('templates', 'squid.conf'), '/etc/squid/squid.conf'
       end
     end
   end
