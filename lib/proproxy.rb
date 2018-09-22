@@ -82,6 +82,7 @@ module Proproxy
         add_icmp_host_prohibited_line
         add_last_commit_line_command
       end
+      allow_specified_src
       configure_ip_table
       restart_squid
     end
