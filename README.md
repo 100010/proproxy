@@ -1,7 +1,12 @@
 # Proproxy
+Make faster to deploy your simple proxy server.
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/proproxy`. To experiment with that code, run `bin/console` for an interactive prompt.
+## Description
+Proproxy installs squid into your server and sets firewall.
+You can specify ip and port which can access your server though firewall.
 
+## Links
+- http://qiita.com
 
 ## Installation
 
@@ -21,6 +26,50 @@ Or install it yourself as:
 
 ## Usage
 
+you need only 4 arguments.
+- 1. your server ip
+- 2. your server ssh port
+- 3. your ip what accesses to proxy server
+- 4. your port to use proxy server though firewall
+
+```ruby
+server = Proproxy::Server.new(:ubuntu, 'xxx.xxx.xxx.xxx', 22)
+server.provision
+server.update_ip_table('yyy.yyy.yyy.yyy', 33) # 33 is the port to use proxy server though firewall
+```
+
+`Proproxy::Server#initialize` method called, ssh access will start and connected your server.
+`Proproxy::Server#provision` method installs squid into your server and sets `squid.conf` and `iptables` default setting.
+`Proproxy::Server#update_ip_table` method sets your ip table settings.
+
+### options
+
+If you want to specify your ssh key path, or username
+```ruby
+server = Proproxy::Server.new(:ubuntu, 'xxx.xxx.xxx.xxx', 22, ssh_path: 'PATH_TO_YOUR_SSH_KEY', username: 'USERNAME')
+```
+
+Or your proxy server can be accessed `port 22` by default,
+you can deny ssh access as:
+```ruby
+server.update_ip_table('yyy.yyy.yyy.yyy', 33, with_ssh_port: false)
+```
+
+
+You can control squid behavior from your local as:
+
+```ruby
+server.clear_squid_cache
+server.stop_squid
+server.start_squid
+server.restart_squid
+server.configure_ip_table # configures current ip settings
+```
+
+## Warning
+Since I just released it, only `ubuntu 16.04` can be used.
+If you missed your ip or ssh settings, the server can't be accessed eternally.
+
 
 ## Development
 
@@ -30,12 +79,8 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/proproxy. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/100010/proproxy. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
-
-## Code of Conduct
-
-Everyone interacting in the Proproxy project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/proproxy/blob/master/CODE_OF_CONDUCT.md).
+[MIT License](https://opensource.org/licenses/MIT).

@@ -6,20 +6,10 @@ class InvalidServerNameError < StandardError ; end
 
 module Proproxy
   class Server
-    # TODO:
-    # AVAILABLE_OS_NAME = [
-    #   :ubuntu,
-    #   :centos
-    # ]
 
     include SSHKit::DSL
 
     def initialize(os_name, ip, port, options={})
-      # TODO: enable to choose even if the server is not ubuntu
-      # unless AVAILABLE_OS_NAME.include? os_name
-      #   raise InvalidServerNameError.new 'invalid os name'
-      # end
-
       ssh_path = if options[:ssh_path].nil?
         '~/.ssh/id_rsa'
       else
