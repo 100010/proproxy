@@ -6,7 +6,7 @@ Proproxy installs squid into your server and sets firewall.
 You can specify ip and port which can access your server though firewall.
 
 ## Links
-- http://qiita.com
+- https://qiita.com/100010/items/91d3e540c184891cd0b7
 
 ## Installation
 
@@ -27,10 +27,10 @@ Or install it yourself as:
 ## Usage
 
 you need only 4 arguments.
-- 1. your server ip
-- 2. your server ssh port
-- 3. your ip what accesses to proxy server
-- 4. your port to use proxy server though firewall
+- your server ip
+- your server ssh port
+- your ip what accesses to proxy server
+- your port to use proxy server though firewall
 
 ```ruby
 server = Proproxy::Server.new(:ubuntu, 'xxx.xxx.xxx.xxx', 22)
