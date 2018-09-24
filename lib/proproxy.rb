@@ -2,8 +2,6 @@ require "proproxy/version"
 require 'pry'
 require 'sshkit'
 
-class InvalidServerNameError < StandardError ; end
-
 module Proproxy
   class Server
 
