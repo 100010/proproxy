@@ -77,6 +77,15 @@ module Proproxy
       restart_squid
     end
 
+    def allow_all_access(port)
+      remove_last_2_line
+      on @remote_host do
+        execute "echo -A FWINPUT -p tcp -m tcp --dport #{port} -s 0.0.0.0/0 -j ACCEPT >> /etc/sysconfig/iptables"
+      end
+      add_icmp_host_prohibited_line
+      add_last_commit_line_command
+    end
+
     def configure_ip_table
       on @remote_host do
         execute 'iptables-restore < /etc/sysconfig/iptables'
